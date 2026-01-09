@@ -1,35 +1,30 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { Box, Flex, Button, Heading } from '@chakra-ui/react';
+import Clientes from './pages/Clientes';
+import Produtos from './pages/Produtos';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      {/* Menu Superior */}
+      <Box bg="teal.500" p={4}>
+        <Flex gap={4}>
+          <Heading size="md" color="white" mr={10}>Loja System</Heading>
+          <Link to="/"><Button colorScheme="teal" variant="solid">Clientes</Button></Link>
+          <Link to="/produtos"><Button colorScheme="teal" variant="solid">Produtos</Button></Link>
+          {/* Deixe o botão de Pedidos pronto para o dia 3 */}
+          <Link to="/pedidos"><Button colorScheme="teal" variant="solid">Novo Pedido</Button></Link>
+        </Flex>
+      </Box>
+
+      {/* Área de Conteúdo */}
+      <Routes>
+        <Route path="/" element={<Clientes />} />
+        <Route path="/produtos" element={<Produtos />} />
+        <Route path="/pedidos" element={<Box p={10}>Página de Pedidos (Em breve)</Box>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
