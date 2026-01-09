@@ -35,6 +35,13 @@ function Pedidos() {
     setQuantidade(1);
   };
 
+  // Função para remover um item específico da lista
+  const removerItem = (indexParaRemover) => {
+    // Cria uma nova lista filtrando, mantendo apenas quem tem índice diferente do removido
+    const novoCarrinho = carrinho.filter((_, index) => index !== indexParaRemover);
+    setCarrinho(novoCarrinho);
+  };
+
   const totalPedido = carrinho.reduce((acc, item) => acc + item.subtotal, 0);
 
   // 2. FUNÇÃO QUE DESENHA O PDF
@@ -146,6 +153,7 @@ function Pedidos() {
               <Th>Qtd</Th>
               <Th>Preço Un.</Th>
               <Th>Subtotal</Th>
+              <Th>Ação</Th> {/* <--- Coluna nova */}
             </Tr>
           </Thead>
           <Tbody>
@@ -155,6 +163,16 @@ function Pedidos() {
                 <Td>{item.quantidade}</Td>
                 <Td>R$ {item.precoUnitario}</Td>
                 <Td>R$ {item.subtotal.toFixed(2)}</Td>
+                <Td>
+                  {/* Botão de Remover */}
+                  <Button 
+                    size="sm" 
+                    colorScheme="red" 
+                    onClick={() => removerItem(index)}
+                  >
+                    Remover
+                  </Button>
+                </Td>
               </Tr>
             ))}
           </Tbody>
