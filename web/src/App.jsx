@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { Box, Flex, Button, Heading } from '@chakra-ui/react';
 import Clientes from './pages/Clientes';
 import Produtos from './pages/Produtos';
+import Pedidos from './pages/Pedidos';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Clientes />} />
         <Route path="/produtos" element={<Produtos />} />
-        <Route path="/pedidos" element={<Box p={10}>Página de Pedidos (Em breve)</Box>} />
+        <Route path="/pedidos" element={<Pedidos />} />
       </Routes>
     </BrowserRouter>
   );
