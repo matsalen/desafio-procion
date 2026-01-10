@@ -12,6 +12,7 @@ model Cliente {
   nome      String
   email     String   @unique
   telefone  String?
+  ativo     Boolean  @default(true)
   pedidos   Pedido[] // Relação: Um cliente tem vários pedidos
 }
 
@@ -20,6 +21,7 @@ model Produto {
   nome        String
   descricao   String?
   preco       Float
+  ativo     Boolean  @default(true)
   itensPedido ItemPedido[]   // Relação: Produto está em vários itens de pedido
 }
 
@@ -27,6 +29,7 @@ model Pedido {
   id        Int          @id @default(autoincrement())
   data      DateTime     @default(now())
   total     Float
+  formaPagamento String       @default("Pix")
   clienteId Int
   cliente   Cliente      @relation(fields: [clienteId], references: [id])
   itens     ItemPedido[]

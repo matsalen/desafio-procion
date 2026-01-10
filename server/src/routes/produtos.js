@@ -26,7 +26,6 @@ router.post('/', async (req, res) => {
       data: { 
         nome, 
         descricao,
-        // O frontend pode mandar string "10.50", garantimos que vire número
         preco: parseFloat(preco) 
       }
     });
@@ -34,6 +33,45 @@ router.post('/', async (req, res) => {
     res.status(201).json(novoProduto);
   } catch (error) {
     res.status(500).json({ error: "Erro ao criar produto" });
+  }
+});
+
+// ATUALIZAR
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nome, preco, descricao } = req.body;
+    
+    const produtoAtualizado = await prisma.produto.update({
+      where: { id: Number(id) },
+      data: { 
+        nome, 
+        descricao,
+        preco: parseFloat(preco) 
+      }
+    });
+    
+    res.json(produtoAtualizado);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao atualizar produto" });
+  }
+});
+
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const produtoAtual = await prisma.produto.findUnique({ where: { id: Number(id) } });
+    
+    const novoStatus = !produtoAtual.ativo;
+
+    await prisma.produto.update({
+      where: { id: Number(id) },
+      data: { ativo: novoStatus }
+    });
+    
+    res.json({ message: novoStatus ? "Produto reativado" : "Produto inativado" });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao alterar status" });
   }
 });
 

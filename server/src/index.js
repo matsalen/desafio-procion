@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 
-// Importando as rotas que criamos
+// Importando as rotas
 import clientesRoutes from './routes/clientes.js';
 import produtosRoutes from './routes/produtos.js';
 import pedidosRoutes from './routes/pedidos.js';

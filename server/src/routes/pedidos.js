@@ -24,17 +24,18 @@ router.get('/', async (req, res) => {
 // CRIAR PEDIDO
 router.post('/', async (req, res) => {
   try {
-    const { clienteId, itens, total } = req.body;
+    const { clienteId, itens, total, formaPagamento } = req.body; 
 
     if (!clienteId || !itens || itens.length === 0) {
       return res.status(400).json({ error: "Dados incompletos" });
     }
 
-    // CRIAÇÃO "ATÔMICA": Ou salva tudo (pedido + itens), ou não salva nada.
+    // Salva tudo (pedido + itens), ou não salva nada.
     const novoPedido = await prisma.pedido.create({
       data: {
         clienteId: Number(clienteId),
         total: parseFloat(total),
+        formaPagamento: formaPagamento, 
         data: new Date(),
         itens: {
           create: itens.map(item => ({
